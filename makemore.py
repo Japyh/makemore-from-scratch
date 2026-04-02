@@ -144,3 +144,95 @@ class Transformer(nn.Module):
 
 # ---------------------------------------
 # Bag of Words (BoW) Language Model
+
+class CausalBoW(nn.Module):
+    """
+    Causal BoW. Averages the preceding elements and looks suspiciously like a CausalAttention
+    module you'd find in a transformer, for no apparent reason at all.
+    """
+    def __init__(self, config):
+        super().__init__()
+
+        # used to mask out vectors and preserve autoregressive property
+        self.block_size = config.block_size
+        self.register_buffer("bias", torch.tril(torch.ones(config.block_size, config.block_size)).view(1, config.block_size, config.block_size)) # (1, block_size, block_size)
+
+    def forward(self, x):
+        B, T, C = x.size() # batch size, sequence length, embedding dimensionality (n_embd)
+
+        # do the weighted average of the previous elements in the sequence
+        att = torch.zeros(B, T, T, device=x.device) # (B, T, T)
+        att = att.masked_fill(self.bias[:, :T, :T] == 0, float('-inf')) # (B, T, T)
+        att = F.softmax(att, dim=-1) # (B, T, T)
+        y = att @ x # (B, T, T) x (B, T, C) -> (B, T, C)
+        return y
+    
+class BoWBlock(nn.Module):
+    """ Collects BoW features and then applies an MLP to them. """
+
+    def __init__(self, config):
+        super().__init__()
+
+        # Causal BoW module
+        self.cbow = CausalBoW(config)
+        # MLP to process the BoW features
+        self.mlp = nn.ModuleDict(dict(
+            c_fc = nn.Linear(config.n_embd, config.n_embd2), # first layer of the MLP, projects from n_embd to n_embd2
+            c_proj = nn.Linear(config.n_embd2, config.n_embd), # second layer of the MLP, projects back to n_embd
+        ))
+        m = self.mlp
+        self.mlpf = lambda x: m.c_proj(F.tanh(m.c_fc(x))) # MLP forward pass
+    
+    def forward(self, x):
+        x = x + self.cbow(x) # BoW with residual connection
+        x = x + self.mlpf(x) # MLP with residual connection
+        return x
+
+class BoW(nn.Module):
+    """
+    Takes the previous block_size tokens, encodes them with a lookup table, 
+    also encodes their positions with lookup table, averages them together, and then applies an MLP to the result.
+    and uses that to predict the next token in the sequence.
+    """
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+        self.block_size = config.block_size
+        self.vocab_size = config.vocab_size
+        # token embedding
+        self.wte = nn.Embedding(config.vocab_size, config.n_embd) # token embedding table
+        # position embedding
+        self.wpe = nn.Embedding(config.block_size, config.n_embd) # position embedding table
+        # context block
+        self.context_block = BoWBlock(config) # context block to average the previous elements in the sequence
+        # language model head decoder layer
+        self.lm_head = nn.Linear(config.n_embd, config.vocab_size) # language modeling head
+
+    def get_block_size(self):
+        return self.block_size
+
+    def forward(self, idx, targets=None):
+        device = idx.device
+        B, T = idx.size()
+        assert T <= self.block_size, f"Cannot forward sequence of length {T}, block size is only {self.block_size}"
+        pos = torch.arange(0, T, dtype=torch.long, device=device).unsqueeze(0) # (1, T)
+
+        # forward the BoW model itself
+        token_emb = self.wte(idx) # token embeddings (B, T, n_embd)
+        position_emb = self.wpe(pos) # position embeddings (1, T, n_embd)
+        # add and run through the decoder MLP to get the logits for the next token in the sequence
+        x = token_emb + position_emb # (B, T, n_embd)
+        # run the bag of words context module
+        x = self.context_block(x) # (B, T, n_embd)
+        # decode to next token probability
+        logits = self.lm_head(x) # (B, T, vocab_size)
+
+        # if we are given some desired targets also calculate the loss
+        loss = None
+        if targets is not None:
+            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1) # ((B*T, vocab_size), (B*T))
+
+        return logits, loss
+    
+# ---------------------------------------
+
