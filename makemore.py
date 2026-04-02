@@ -236,3 +236,102 @@ class BoW(nn.Module):
     
 # ---------------------------------------
 
+"""
+Recurrent Neural Network (RNN) language model: either a vanilla RNN reccurence or a GRU.
+Did not implement an LSTM because its API is a bit moreannoying it has both a hidden state and a cell state,
+but it's very similar to GRU and in practice works just as well.
+"""
+
+class RNNcell(nn.Module):
+    """
+    the job of a "Cell" is to:
+    take input at current time step x_{t} and the hidden state at the
+    previous time step h_{t-1} and return the resulting hidden state h_{t} for the current time step.
+    """
+    def __init__(self, config):
+        super().__init__()
+        self.xh_to_h = nn.Linear(config.n_embd + config.n_embd2, config.n_embd2) # linear layer to combine input and hidden state
+        
+    def forward(self, xt, hprev):
+        xh = torch.cat([xt, hprev], dim=1) # concatenate input and hidden state (B, n_embd + n_embd2)
+        ht = F.tanh(self.xh_to_h(xh)) # apply linear layer and nonlinearity to get the next hidden state (B, n_embd2)
+        return ht
+        
+class GRUcell(nn.Module):
+    """
+    same job as RNN cell, but a bit more complicated recurrence formula
+    that makes the GRU more expressive and easier to optimize.
+    """
+    def __init__(self, config):
+        super().__init__()
+        self.xh_to_z = nn.Linear(config.n_embd + config.n_embd2, config.n_embd2) # linear layer to compute update gate
+        self.xh_to_r = nn.Linear(config.n_embd + config.n_embd2, config.n_embd2) # linear layer to compute reset gate
+        self.xh_to_hbar = nn.Linear(config.n_embd + config.n_embd2, config.n_embd2) # linear layer to compute candidate hidden state
+        
+    def forward(self, xt, hprev):
+        # first use the reset gate to wipe some channels of the hiddden state to zero
+        xh = torch.cat([xt, hprev], dim=1) # concatenate input and hidden state (B, n_embd + n_embd2)
+        r = F.sigmoid(self.xh_to_r(xh)) # reset gate (B, n_embd2)
+        hprev_reset = r * hprev # apply reset gate to hidden state (B, n_embd2)
+        # calculate the candidate new hidden state using the reset hidden state
+        xhr = torch.cat([xt, hprev_reset], dim=1) # concatenate input and reset hidden state (B, n_embd + n_embd2)
+        hbar = F.tanh(self.xh_to_hbar(xhr)) # candidate hidden state (B, n_embd2)
+        # calculate the switch gate that determines if each channel should be updated at all
+        z = F.sigmoid(self.xh_to_z(xh)) # update gate (B, n_embd2)
+        # combine the previous hidden state and the candidate hidden state according to the update gate
+        ht = (1 -  z) * hprev + z * hbar # new hidden state (B, n_embd2)
+        return ht
+
+class RNN(nn.Module):
+    """
+    RNN language model. Takes the previous block_size tokens, encodes them with a lookup table, 
+    adds them together, and then applies an RNN recurrence to the result and uses that to predict the next token in the sequence.
+    """
+    def __init__(self, config, cell_type='RNN'):
+        super().__init__()
+        self.block_size = config.block_size
+        self.vocab_size = config.vocab_size
+        self.start = nn.Parameter(torch.zeros(1, config.n_embd2)) # starting hidden state (1, n_embd2)
+        # token embedding
+        self.wte = nn.Embedding(config.vocab_size, config.n_embd) # token embedding table
+        # context block
+        if cell_type == 'RNN':
+            self.rnn_cell = RNNcell(config) # RNN cell for processing the sequence
+        elif cell_type == 'GRU':
+            self.rnn_cell = GRUcell(config) # GRU cell for processing the sequence
+        # language model head decoder layer
+        self.lm_head = nn.Linear(config.n_embd2, config.vocab_size) # language modeling head
+
+    def get_block_size(self):
+        return self.block_size
+
+    def forward(self, idx, targets=None):
+        device = idx.device
+        B, T = idx.size()
+        assert T <= self.block_size, f"Cannot forward sequence of length {T}, block size is only {self.block_size}"
+
+        # embed all the integers up front and all at once for efficiency
+        emb = self.wte(idx) # (B, T, n_embd)
+
+        # sequentially iterate over the input and update the RNN state at each time step
+        hprev = self.start.expand(B, -1) # (B, n_embd2)
+        hiddens = []
+        for i in range(T):
+            xt = emb[:, i, :] # (B, n_embd)
+            ht = self.rnn_cell(xt, hprev) # (B, n_embd2)
+            hprev = ht
+            hiddens.append(ht)
+        
+        # decode the outputs
+        hidden = torch.stack(hiddens, dim=1) # (B, T, n_embd2)
+        logits = self.lm_head(hidden) # (B, T, vocab_size)
+
+        # if we are given some desired targets also calculate the loss
+        loss = None
+        if targets is not None:
+            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1) # ((B*T, vocab_size), (B*T))
+        
+        return logits, loss
+
+# ---------------------------------------
+
