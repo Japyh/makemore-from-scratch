@@ -1,0 +1,512 @@
+{
+  "transformer": {
+    "model": "transformer",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\transformer\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\transformer\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\transformer\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 2.2131576538085938,
+        "test_loss": 2.1970791816711426
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.144432544708252,
+        "test_loss": 2.1338284015655518
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.1263296604156494,
+        "test_loss": 2.106513023376465
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.085818290710449,
+        "test_loss": 2.0845537185668945
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "dariana",
+        "nix",
+        "mariyah",
+        "talyn",
+        "ashan",
+        "kyce"
+      ],
+      "in_test": [],
+      "new": [
+        "riyaansta",
+        "telanie",
+        "baytro",
+        "uuddios",
+        "deuberke",
+        "neeffa",
+        "burtithe",
+        "risni",
+        "leosannabe",
+        "yisten",
+        "belean",
+        "abriyah",
+        "lucwian",
+        "zachian",
+        "emberttloge",
+        "asabelse",
+        "laigan",
+        "yousleej",
+        "herc",
+        "terekly",
+        "depros",
+        "aramilice",
+        "mamaria",
+        "abur",
+        "cazi",
+        "ankodaw",
+        "fuby",
+        "dutarrio",
+        "martari",
+        "asbreuw",
+        "kenbin",
+        "cestleyna",
+        "kazerin",
+        "voaorah",
+        "ataleiah",
+        "rouder",
+        "jaxodanne",
+        "shonthis",
+        "kewis",
+        "fazia",
+        "lijar",
+        "alyve",
+        "ellayah",
+        "truaz"
+      ]
+    }
+  },
+  "bigram": {
+    "model": "bigram",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bigram\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bigram\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bigram\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 3.1172914505004883,
+        "test_loss": 3.115144968032837
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.9687070846557617,
+        "test_loss": 2.9647583961486816
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.8480236530303955,
+        "test_loss": 2.8419747352600098
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.7535250186920166,
+        "test_loss": 2.7442972660064697
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "bill",
+        "kylyn"
+      ],
+      "in_test": [],
+      "new": [
+        "juxn",
+        "h",
+        "ne",
+        "avtzeliqua",
+        "vykunromadazeis",
+        "ngjynndafonner",
+        "eqckefeickhonye",
+        "a",
+        "jlalekrypay",
+        "anozc",
+        "jerzavsahretkjy",
+        "ngnie",
+        "fne",
+        "ms",
+        "roqamp",
+        "esawlaprtxgajew",
+        "kemfpamiykvonel",
+        "jcssubaqulnam",
+        "l",
+        "bal",
+        "takorricohynimn",
+        "g",
+        "vaowato",
+        "niyioneininnnzn",
+        "nerivelyizlkayd",
+        "acexzobluc",
+        "briwicqusvdegar",
+        "jbrus",
+        "coixylenuya",
+        "ainnjubfmaen",
+        "neyiprwguajtftu",
+        "afh",
+        "disanuestzovrsb",
+        "aszhahadifeebuu",
+        "lyr",
+        "euyzmidaiyasamy",
+        "ndfoy",
+        "atzaplqth",
+        "br",
+        "cze",
+        "nism",
+        "dijtchoesareaqa",
+        "gwps",
+        "mopjiohygnf",
+        "kibdayuanyxuovy",
+        "vnabrselenlakqj",
+        "fcddomanmba",
+        "eorcgkkfrseima"
+      ]
+    }
+  },
+  "mlp": {
+    "model": "mlp",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\mlp\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\mlp\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\mlp\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 2.2714312076568604,
+        "test_loss": 2.254472017288208
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.211045265197754,
+        "test_loss": 2.1941840648651123
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.1943039894104004,
+        "test_loss": 2.170523166656494
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.1585023403167725,
+        "test_loss": 2.143286943435669
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "keilan",
+        "jaxlyn",
+        "jo",
+        "dayli",
+        "paris",
+        "dionna",
+        "shylee",
+        "leya"
+      ],
+      "in_test": [],
+      "new": [
+        "alifa",
+        "keidi",
+        "merray",
+        "kyhese",
+        "syolyna",
+        "carzyn",
+        "arisen",
+        "samurie",
+        "sasbomuy",
+        "adenia",
+        "aseiza",
+        "leldeila",
+        "lmani",
+        "aalilie",
+        "yenyan",
+        "savan",
+        "pan",
+        "milleyno",
+        "jahaysh",
+        "pyenonidki",
+        "srakoa",
+        "ellenken",
+        "aderynn",
+        "eveiel",
+        "anauon",
+        "iyane",
+        "alaesi",
+        "jylley",
+        "niyel",
+        "vithen",
+        "melimio",
+        "katolinah",
+        "lannel",
+        "simera",
+        "daricazah",
+        "hande",
+        "calysa",
+        "harume",
+        "jonchoy",
+        "joracelrader",
+        "anousy",
+        "manyanna"
+      ]
+    }
+  },
+  "rnn": {
+    "model": "rnn",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\rnn\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\rnn\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\rnn\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 2.2804675102233887,
+        "test_loss": 2.2759904861450195
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.2292094230651855,
+        "test_loss": 2.2206931114196777
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.196099281311035,
+        "test_loss": 2.1940906047821045
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.1991536617279053,
+        "test_loss": 2.170957088470459
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "rya",
+        "lyon",
+        "laya",
+        "anden",
+        "kailee",
+        "aleah"
+      ],
+      "in_test": [],
+      "new": [
+        "abregenligh",
+        "diand",
+        "alelleedi",
+        "zanchi",
+        "kayliel",
+        "joo",
+        "elista",
+        "ovan",
+        "dhialae",
+        "mefim",
+        "manit",
+        "adevyn",
+        "qusleush",
+        "sullan",
+        "woelin",
+        "nikiah",
+        "talid",
+        "synon",
+        "dalaymi",
+        "kywin",
+        "rah",
+        "coumok",
+        "aiilala",
+        "anysa",
+        "salainiel",
+        "jailavik",
+        "hayon",
+        "coubrie",
+        "afibra",
+        "jecki",
+        "otanelah",
+        "betharle",
+        "jabr",
+        "aummir",
+        "foum",
+        "jaxlyl",
+        "jerpen",
+        "yris",
+        "krin",
+        "kenielyn",
+        "narsia",
+        "fenasha",
+        "amrrynn",
+        "sosmerin"
+      ]
+    }
+  },
+  "gru": {
+    "model": "gru",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\gru\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\gru\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\gru\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 2.289264440536499,
+        "test_loss": 2.2682838439941406
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.1884686946868896,
+        "test_loss": 2.2017276287078857
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.176558256149292,
+        "test_loss": 2.170405149459839
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.1599762439727783,
+        "test_loss": 2.147345542907715
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "mary",
+        "lady",
+        "jovey",
+        "carlee",
+        "jahmi",
+        "merly"
+      ],
+      "in_test": [],
+      "new": [
+        "chemicea",
+        "rojevi",
+        "mitzell",
+        "kyaus",
+        "mirneo",
+        "elaindyn",
+        "kitar",
+        "keminten",
+        "ermy",
+        "vitarey",
+        "sulyna",
+        "aitriell",
+        "avaina",
+        "arrotta",
+        "guza",
+        "kadeli",
+        "oudia",
+        "evira",
+        "amname",
+        "deorkyn",
+        "chadi",
+        "alleimpor",
+        "taelanacig",
+        "brika",
+        "riop",
+        "koliyah",
+        "omnan",
+        "shahdie",
+        "stydan",
+        "zaro",
+        "fantia",
+        "denollr",
+        "amkone",
+        "vezlievie",
+        "ritsen",
+        "chergin",
+        "elesiah",
+        "vaistanei",
+        "romare",
+        "kavid",
+        "joluspelbe",
+        "jazeea",
+        "emmaldh",
+        "moralle"
+      ]
+    }
+  },
+  "bow": {
+    "model": "bow",
+    "train_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bow\\train.log",
+    "sample_log": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bow\\sample.log",
+    "work_dir": "D:\\Data\\nn_zero_to_hero\\makemore\\comparative_runs\\my_comparison\\bow\\work",
+    "loss_records": [
+      {
+        "step": 500,
+        "train_loss": 2.340780258178711,
+        "test_loss": 2.314926862716675
+      },
+      {
+        "step": 1000,
+        "train_loss": 2.301762819290161,
+        "test_loss": 2.2853615283966064
+      },
+      {
+        "step": 1500,
+        "train_loss": 2.2692019939422607,
+        "test_loss": 2.2680611610412598
+      },
+      {
+        "step": 2000,
+        "train_loss": 2.26119327545166,
+        "test_loss": 2.2560439109802246
+      }
+    ],
+    "samples": {
+      "in_train": [
+        "dani",
+        "kiyan",
+        "jad"
+      ],
+      "in_test": [],
+      "new": [
+        "luck",
+        "braghi",
+        "geshya",
+        "nyache",
+        "taqiyn",
+        "seelyna",
+        "ishoconn",
+        "owharie",
+        "bubririg",
+        "dauyala",
+        "ckayala",
+        "tawn",
+        "kyzon",
+        "fande",
+        "kulmaigh",
+        "kalelaha",
+        "giysicah",
+        "fynnyie",
+        "kqirenina",
+        "brich",
+        "fethuh",
+        "madlamyn",
+        "jerliyn",
+        "zyliaynnan",
+        "jeno",
+        "cantah",
+        "barian",
+        "ellnte",
+        "mafin",
+        "cabialh",
+        "eliclynn",
+        "emifra",
+        "isntes",
+        "tazeah",
+        "mannniy",
+        "kictinda",
+        "lerla",
+        "medikan",
+        "dearla",
+        "abei",
+        "saen",
+        "sarrian",
+        "donaha",
+        "carionnanna",
+        "lahikl",
+        "yamenil",
+        "caizhie"
+      ]
+    }
+  }
+}

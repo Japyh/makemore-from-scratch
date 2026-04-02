@@ -1,0 +1,10 @@
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+
+# Local training outputs from direct makemore.py runs
+out/
+
+# Keep comparative study summary artifacts at study root,
+# but ignore heavy per-model training folders/logs/checkpoints.
+comparative_runs/*/*/
